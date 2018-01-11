@@ -1,7 +1,7 @@
 (function() {
 
     // Private vars
-    var $content, map, markers, coords = {};
+    var $content, map, markers, watch, coords = {};
 
     // ----------------------------------------------------
     // Configuration
@@ -179,6 +179,9 @@
                 loadTrimetData();
                 setInterval(loadTrimetData, config.timeout);
             });
+
+            // Watch the position for changes
+            watch = navigator.geolocation.watchPosition((pos) => { coords = pos.coords });
         },
 
         // Callback for the Google maps initialization
