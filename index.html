@@ -9,12 +9,21 @@
   </head>
 
   <body>
-    <h1>Trimet vehicles near you</h1>
-    <div id="info"></div>
-    <div id="error"></div>
-    <div id="container">
-      <ul id="content"></ul>
-      <div id="map"></div>
+    <div id="main">
+      <h1>Trimet vehicles near you</h1>
+      <div id="error"></div>
+      <div id="container">
+        <ul id="content">
+          <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+        </ul>
+        <div id="map"></div>
+      </div>
     </div>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtyZbi1FDfblakidjMVCgYW4YdLL3uuVQ&callback=app.initMap">

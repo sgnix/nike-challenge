@@ -1,7 +1,7 @@
 (function(){
 
   // Private vars
-  var $info, $error, $content, map, markers, coords = {};
+  var $error, $content, map, markers, coords = {};
 
   // ----------------------------------------------------
   // Configuration
@@ -46,6 +46,7 @@
   // ----------------------------------------------------
   function Markers() {
     var m = {};
+    var self = this;
 
     return {
       add: (number, lat, lng) => {
@@ -61,24 +62,46 @@
         }
       },
 
-      remove: (number) => delete m[number]
+      remove: (num) => { 
+        m[num].setMap(null);
+        delete m[num]; 
+      },
+
+      find: (num, data) => {
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].routeNumber === num) {
+            return true;
+          }
+        }
+        return false;
+      }
+
     };
   }
 
+  Markers.prototype.purge = function(data) {
+    var self = this;
+    Object.keys(m).forEach((num) => { 
+      if (!self.find(num, data)) {
+        self.remove(num);
+      }
+    });
+  };
+
   function showData(data) {
-    var vehicle = data.resultSet.vehicle;
-    var found = Array.isArray(vehicle) && vehicle.length > 0;
+    var vehicle = data.resultSet.vehicle,
+        found   = Array.isArray(vehicle) && vehicle.length > 0,
+        html    = '';
 
     if (!found) {
-      $error.show("There are no vehicles around you");
+      $content.innerHTML = "There are no vehicles around you";
       return;
     }
 
-    var html = "";
+    markers.purge(vehicle);
     for (var i = 0; i < vehicle.length; i++) {
       var v = vehicle[i];
       if (v.signMessage != null) {
-        //console.log(v);
         html += '<li>' + v.signMessage + '</li>';
         markers.add(v.routeNumber, v.latitude, v.longitude);
       }
@@ -123,25 +146,22 @@
   }
 
   function getCoords(success) {
-    var error = (e) => console.log("Error: " + e);
+    var error = (e) => $error.show("Error: " + e);
     navigator.geolocation.getCurrentPosition(success, error, config.geolocation.options);
-  }
-
-  function poll() {
   }
 
   window.app = {
     run: () => {
       
       // Initialize DOM elements
-      $info  = new Notify('info'),
       $error = new Notify('error');
       $content = document.getElementById('content');
 
+      // Markers
+      markers = new Markers();
+
       // Get the coordinates
-      $info.show("Determining your location ...");
       getCoords((pos) => {
-        $info.hide();
         coords = pos.coords;
         map.setCenter({lat: pos.coords.latitude, lng: pos.coords.longitude}); 
         loadTrimetData();
@@ -152,9 +172,8 @@
     initMap: () => {
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
-          center: { lat: 45.4354834, lng: -122.8311916 } // Library
+          center: { lat: 45.4354834, lng: -122.8311916 } // Somewhere in Beaverton
         });
-        markers = new Markers();
     }
   };
 })();
