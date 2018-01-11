@@ -107,7 +107,7 @@
             }
         }
 
-        $content.innerHTML = html;
+        $content.innerHTML = '<ul>' + html + '</ul>';
     }
 
     function formatParams(params) {
