@@ -13,7 +13,11 @@
 
 #content li {
     list-style-type: none;
-    border-bottom: 1px dotted #666;
+    border-bottom: 1px dotted #aaa;
     padding-bottom: 5px;
     padding-top: 5px;
+}
+
+#content li:hover {
+    background-color: #eee;
 }

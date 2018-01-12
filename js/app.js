@@ -1,7 +1,7 @@
 (function() {
 
     // Private vars
-    var $content, map, markers, watch, coords = {};
+    var $content, map, markers, watch, myloc, coords = {};
 
     // ----------------------------------------------------
     // Configuration
@@ -18,11 +18,16 @@
         },
 
         trimet: {
-            appId: "CAE61A18D175262110E7DA593",
-            url: "https://developer.trimet.org/ws/v2/vehicles"
+            url: "https://developer.trimet.org/ws/v2/vehicles",
+            appId: "CAE61A18D175262110E7DA593"
         },
 
-        timeout: 5000 // update timeout
+        googleMap: {
+            zoom: 12,
+            center: { lat: 45.4354834, lng: -122.8311916 } // Somewhere in Beaverton
+        },
+
+        timeout: 5000 // data refresh timeout
     };
 
     // ----------------------------------------------------
@@ -34,9 +39,14 @@
         $el.innerHTML = msg;
     }
 
-    // ----------------------------------------------------
+    // ====================================================
     // Markers class
     // ----------------------------------------------------
+    // Maintains a list (map really) of currently displayed
+    // markers, and provides methods to add/update and purge
+    // the list of bus markers that no longer should be on
+    // the map.
+    // ====================================================
     function Markers() {
         var m = {};
 
@@ -60,18 +70,17 @@
             // Add or update a marker for bus number at lat/lng
             add: (number, lat, lng) => {
                 if (m[number]) {
-                    m[number].setPosition({
-                        lat: lat,
-                        lng: lng
-                    });
+                    m[number].setPosition({ lat: lat, lng: lng });
                 } else {
                     m[number] = new google.maps.Marker({
-                        position: {
-                            lat: lat,
-                            lng: lng
-                        },
+                        position: { lat: lat, lng: lng },
                         map: map,
-                        label: String(number)
+                        label: String(number),
+                        icon: {
+                          url: '//maps.google.com/mapfiles/kml/shapes/bus.png',
+                          scaledSize: new google.maps.Size(32, 32),
+                          labelOrigin: new google.maps.Point(16, -5)
+                        }
                     });
                 }
             },
@@ -154,6 +163,21 @@
         navigator.geolocation.getCurrentPosition(success, error, config.geolocation.options);
     }
 
+    // Place a blue pin at the user's location
+    function setUserLocation() {
+        myloc = new google.maps.Marker({
+            position: {
+                lat: coords.latitude,
+                lng: coords.longitude
+            },
+            map: map,
+            icon: {
+              url: '//maps.google.com/mapfiles/kml/paddle/ltblu-circle.png',
+              scaledSize: new google.maps.Size(48, 48)
+            }
+        });
+    }
+
     // ----------------------------------------------------
     // Main application
     // ----------------------------------------------------
@@ -172,28 +196,30 @@
             // Get the coordinates
             getCoords((pos) => {
                 coords = pos.coords;
+
                 map.setCenter({
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude
+                    lat: coords.latitude,
+                    lng: coords.longitude
                 });
+
                 loadTrimetData();
                 setInterval(loadTrimetData, config.timeout);
+
+                setUserLocation();
+
+                // Watch the position for changes
+                watch = navigator.geolocation.watchPosition((pos) => { 
+                  coords = pos.coords;
+                  myloc.setPosition({ lat: coords.latitude, lng: coords.longitude });
+                });
             });
 
-            // Watch the position for changes
-            watch = navigator.geolocation.watchPosition((pos) => { coords = pos.coords });
         },
 
         // Callback for the Google maps initialization
         // -------------------------------------------
         initMap: () => {
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: {
-                    lat: 45.4354834,
-                    lng: -122.8311916
-                } // Somewhere in Beaverton
-            });
+            map = new google.maps.Map(document.getElementById('map'), config.googleMap);
         }
     };
 })();
