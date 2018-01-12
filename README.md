@@ -50,4 +50,9 @@ A map of the vicinity (3 miles of radius) is displayed
 
 A call to the TriMet API is periodically made, the data is parsed, processed and updated in the list of vehicles as well as the bus markers on the map.
 
-For more details, please refer to the source code of [app.js](https://github.com/naturalist/nike-challenge-node/blob/master/js/app.js), which is fairly small, clean and well commented.
+For more details, please refer to the source code of [app.js](https://github.com/naturalist/nike-challenge/blob/master/js/app.js), which is fairly small, clean and well commented.
+
+## Other projects of interest
+
+* [mempe](https://github.com/naturalist/mempe) - Local storage code pastes shared over web socket
+* Short Link Privacy (repo available upon request) - Short Link Privacy (SLP) provides an easy and convenient way to encrypt one's web communications. It works in social media sites, web based email clients, forums, bulletin boards and any other web based communication tools.
