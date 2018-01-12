@@ -1,6 +1,6 @@
-# Trimet Vehicles Near You
+# TriMet Vehicles Near You
 
-This is a serverless single-page application for Web and Mobile. Its purpose is to show all Trimet vehicles within a radius of 3 miles of your location.
+This is a serverless single-page application for Web and Mobile. Its purpose is to show all TriMet vehicles within a radius of 3 miles of your location.
 
 ## Live Example
 
@@ -10,7 +10,7 @@ Please make sure that your browser or mobile device allow geolocation services, 
 
 ## Background
 
-This project was created on a Wednesday evening as part of this [coding challenge](https://github.com/uber/coding-challenge-tools) for Nike. The challenge objective has been slightly modified to adapt it better to Portland's Trimet API, which does not provide departure times.
+This project was created on a Wednesday evening as part of this [coding challenge](https://github.com/uber/coding-challenge-tools) for Nike. The challenge objective has been slightly modified to adapt it better to Portland's TriMet API, which does not provide departure times.
 
 ## Problem
 
@@ -18,14 +18,14 @@ Create a service that gives real-time location for public transportation in the 
 
 ## Solution
 
-Given that only publicly available API endpoints have been used, such as [Trimet Vehicle Location Service](https://developer.trimet.org/ws_docs/vehicle_locations_ws.shtml) and [Google Maps](https://maps.google.com), it has been determined that this application does not need a back end. The latter would have been required **if** either of the services used required authentication.
+Given that only publicly available API endpoints have been used, such as [TriMet Vehicle Location Service](https://developer.trimet.org/ws_docs/vehicle_locations_ws.shtml) and [Google Maps](https://maps.google.com), it has been determined that this application does not need a back end. The latter would have been required **if** either of the services used required authentication.
 
 Therefore, a serverless single-page application with responsive design has been created using the following tools:
 
 * The [VanillaJS JavaScript framework](http://vanilla-js.com) - a fast, lightweight, cross-platform framework
 for building incredible, powerful JavaScript applications.
 * The [MiniCSS framework](https://minicss.org/index) - providing responsive grids and pleasant typefaces. 
-* [Trimet Vehicle Location Service](https://developer.trimet.org/ws_docs/vehicle_locations_ws.shtml) - providing real-time location data for all Trimet vehicles.
+* [TriMet Vehicle Location Service](https://developer.trimet.org/ws_docs/vehicle_locations_ws.shtml) - providing real-time location data for all TriMet vehicles.
 * [Google Maps](https://maps.google.com) - provides API to display and customize maps.
 
 ### Why VanillaJS?
@@ -48,6 +48,6 @@ The position of the user is established using the built-in geolocation service.
 
 A map of the vicinity (3 miles of radius) is displayed
 
-A call to the Trimet API is periodically made, the data is parsed, processed and updated in the list of vehicles as well as the bus markers on the map.
+A call to the TriMet API is periodically made, the data is parsed, processed and updated in the list of vehicles as well as the bus markers on the map.
 
 For more details, please refer to the source code of [app.js](https://github.com/naturalist/nike-challenge-node/blob/master/js/app.js), which is fairly small, clean and well commented.
