@@ -30,4 +30,18 @@ for building incredible, powerful JavaScript applications.
 * [Trimet Vehicle Location Service](https://developer.trimet.org/ws_docs/vehicle_locations_ws.shtml)
 * [Google Maps](https://maps.google.com)
 
+### Why VanillaJS?
 
+VanillaJS was picked for this project for its robustness, speed and browser support. It provides blazing fast code compilation time and rendering. The [author of this application](https://github.com/naturalist) believes that VanillaJS is the mother of all JavaScript web frameworks. One who can wield VanillaJS, can handle any other arbitrary framework.
+
+As the application grows, it may benefit from moving to another framework, such as Knockout.js or Rivets.js, which will handle event and element dependencies better.
+
+## Why MiniCSS?
+
+It is well known that most web application using Bootstrap (and such) only utilize around 20% of its definitions. The result is very often **application obesity** - a bloated big application that wastes resources and takes too long to load.
+
+MiniCSS is miniscule, yet it handles 99% of the UX cases. This application only uses it for its responsive grids. The MiniCSS is loaded from CDN, so fast delivery times are guaranteed.
+
+## Application Design and Architecture
+
+The entire application is contained inside a single JavaScript closure, so it does not pollute the global namespace. It defines a number of private functions and classes. The outside world only has access to the `app` object, which contains functions needed to bootstrap the application and initialize Google Maps - `run` and `initMap` respectively. 
