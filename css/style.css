@@ -11,6 +11,10 @@
     min-height: 400px;
 }
 
+#content {
+    max-height: 500px;
+}
+
 #content li {
     list-style-type: none;
     border-bottom: 1px dotted #aaa;

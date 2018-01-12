@@ -51,35 +51,39 @@
         var m = {};
 
         // Find a bus number in an array of bus data
-        function find(num, data) {
+        function find(id, data) {
             for (var i = 0; i < data.length; i++) {
-                if (data[i].routeNumber === Number(num))
+                if (data[i].vehicleID === Number(id))
                     return true;
             }
             return false;
         };
 
         // Remove a bus number from the map
-        function remove(num) {
-            m[num].setMap(null);
-            delete m[num];
+        function remove(id) {
+            m[id].setMap(null);
+            delete m[id];
         };
 
         return {
 
-            // Add or update a marker for bus number at lat/lng
-            add: (number, lat, lng) => {
-                if (m[number]) {
-                    m[number].setPosition({ lat: lat, lng: lng });
+            // Add or update a marker for bus based on vehicle record
+            add: (v) => {
+                var id = v.vehicleID,
+                    lat = v.latitude,
+                    lng = v.longitude;
+
+                if (m[id]) {
+                    m[id].setPosition({ lat: lat, lng: lng });
                 } else {
-                    m[number] = new google.maps.Marker({
+                    m[id] = new google.maps.Marker({
                         position: { lat: lat, lng: lng },
                         map: map,
-                        label: String(number),
+                        label: String(v.routeNumber),
                         icon: {
                           url: '//maps.google.com/mapfiles/kml/shapes/bus.png',
                           scaledSize: new google.maps.Size(32, 32),
-                          labelOrigin: new google.maps.Point(16, -5)
+                          labelOrigin: new google.maps.Point(16, -7)
                         }
                     });
                 }
@@ -112,7 +116,7 @@
             var v = vehicle[i];
             if (v.type == "bus" && v.signMessage != null) {
                 html += '<li>' + v.signMessage + '</li>';
-                markers.add(v.routeNumber, v.latitude, v.longitude);
+                markers.add(v);
             }
         }
 
