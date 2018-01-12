@@ -49,3 +49,5 @@ The position of the user is established using the built-in geolocation service.
 A map of the vicinity (3 miles of radius) is displayed
 
 A call to the Trimet API is periodically made, the data is parsed, processed and updated in the list of vehicles as well as the bus markers on the map.
+
+For more details, please refer to the source code of [app.js](https://github.com/naturalist/nike-challenge-node/blob/master/js/app.js), which is fairly small, clean and well commented.
