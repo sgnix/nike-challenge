@@ -117,6 +117,9 @@
         }
 
         $content.innerHTML = '<ul>' + html + '</ul>';
+
+        // Trigger a resize event, in case the size of the text also changed the map
+        google.maps.event.trigger(map, "resize");
     }
 
     function formatParams(params) {
