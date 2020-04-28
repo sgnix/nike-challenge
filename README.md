@@ -4,7 +4,7 @@ This is a serverless single-page application for Web and Mobile. Its purpose is 
 
 ## Live Example
 
-You can see a live example at [https://naturalist.github.io/nike/](https://naturalist.github.io/nike/). The application will scale its size if viewed from a mobile device. 
+You can see a live example at [https://sgnix.github.io/nike/](https://naturalist.github.io/nike/). The application will scale its size if viewed from a mobile device. 
 
 Please make sure that your browser or mobile device allow geolocation services, and that you do not have any tracker blockers, such as Ghostery or uBlock. They can sometimes block Google Maps.
 
